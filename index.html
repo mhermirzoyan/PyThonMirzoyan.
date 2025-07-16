@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mirzoyan Business Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    body {
+      background: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: -1;
+      transition: background 0.5s ease;
+    }
+    header {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      animation: fadeIn 2s ease forwards;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+    .header-top-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      animation: rotateLogo 8s linear infinite;
+    }
+    .course-info {
+      margin-top: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #a8c0ff;
+      max-width: 350px;
+      line-height: 1.3;
+      font-style: italic;
+      user-select: none;
+      padding-left: 8px;
+      border-left: 3px solid #0d47a1;
+    }
+    .login-container {
+      position: absolute;
+      top: 150px; 
+      right: 40px; 
+      background: 
+        linear-gradient(rgba(255,255,255,0.35), rgba(255,255,255,0.35)),
+        url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80') no-repeat center center;
+      background-size: cover;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      width: 350px;
+      color: #333;
+      animation: fadeInUp 1.5s ease forwards;
+      opacity: 0;
+      z-index: 15;
+    }
+    .login-container.show {
+      opacity: 1;
+    }
+    .login-container h2 {
+      margin-bottom: 25px;
+      color: #0d47a1;
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.8rem;
+      text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+    }
+    form input {
+      width: 100%;
+      padding: 14px 15px;
+      margin-bottom: 18px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      outline-offset: 2px;
+      outline-color: #0d47a1;
+    }
+    form button {
+      width: 100%;
+      padding: 14px 0;
+      background-color: #0d47a1;
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    form button:hover {
+      background-color: #1565c0;
+    }
+    .links {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #0d47a1;
+    }
+    .links a {
+      color: #0d47a1;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: 600;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+    .about-me {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      max-width: 400px;
+      background: rgba(255 255 255 / 0.85);
+      color: #0d47a1;
+      border-radius: 15px;
+      padding: 25px 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      font-size: 1.1rem;
+      line-height: 1.5;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: fadeInUp 2s ease forwards;
+      z-index: 15;
+    }
+    .about-me h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #0d47a1;
+    }
+    .contact-wrapper {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      display: flex;
+      gap: 15px;
+      z-index: 15;
+    }
+    .contact-telegram {
+      background: #0088cc;
+      padding: 18px 28px;
+      border-radius: 25px;
+      box-shadow: 0 8px 25px rgba(0,136,204,0.6);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.3s ease;
+    }
+    .contact-telegram:hover {
+      background: #005f8c;
+    }
+    .contact-telegram svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+    .contact-phone {
+      background: rgba(13, 71, 161, 0.85);
+      padding: 18px 28px;
+      border-radius: 25px;
+      box-shadow: 0 8px 25px rgba(13, 71, 161, 0.6);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: default;
+      user-select: text;
+      transition: background-color 0.3s ease;
+    }
+    .contact-phone:hover {
+      background: rgba(13, 71, 161, 1);
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      background-color: #0d47a1;
+      color: white;
+      user-select: none;
+      position: relative;
+      z-index: 10;
+    }
+    .rating-container {
+      position: fixed;
+      bottom: 140px; /* поднято выше, чтобы не мешать контактам */
+      right: 40px;
+      background: rgba(255 255 255 / 0.9);
+      color: #0d47a1;
+      border-radius: 15px;
+      padding: 15px 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 20;
+      user-select: none;
+      max-width: 280px;
+      text-align: center;
+    }
+    .rating-buttons-row {
+      display: flex;
+      gap: 15px;
+      width: 100%;
+      justify-content: center;
+    }
+    .rating-button {
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
+    }
+    .rating-button:hover {
+      background: #1565c0;
+    }
+    .rating-count {
+      min-width: 25px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .rating-button:disabled {
+      background: #a0a0a0;
+      cursor: default;
+      opacity: 0.6;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes rotateLogo {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <div class="header-top-row">
+        <img class="logo" src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python Logo" />
+        <span>Вход в систему</span>
+      </div>
+      <div class="course-info">
+        Обучаю Python и многое другое. Курс стоит 200$ USD. По вопросам пишите в Telegram.
+      </div>
+    </div>
+
+    <div class="login-container show">
+      <h2>Добро пожаловать!</h2>
+      <form>
+        <input type="text" placeholder="Логин" required />
+        <input type="password" placeholder="Пароль" required />
+        <button type="submit">Войти</button>
+      </form>
+      <div class="links">
+        <a href="#">Регистрация</a> | <a href="#">Забыли пароль?</a>
+      </div>
+    </div>
+
+    <div class="about-me">
+      <h3>Обо мне</h3>
+      <p>Меня зовут М. Мирзоян. Я начинающий специалист в области интернет-технологий и программирования. Несмотря на то, что мой путь только начинается, я с большим энтузиазмом изучаю современные технологии и стремлюсь создавать полезные и надёжные решения для бизнеса. Моя цель — постоянно расти и развиваться, чтобы со временем стать опытным профессионалом и помогать клиентам достигать их целей.</p>
+    </div>
+
+    <div class="contact-wrapper">
+      <a href="https://t.me/programmerpython777" target="_blank" class="contact-telegram" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9.999 15.799l-.383 3.428c.548 0 .783-.236 1.069-.52l2.568-2.485-3.254-2.995zm-2.655-.878l.344 3.08 8.985-7.408-7.208 4.329-1.521-.248zm-.525-.2l-3.05-1.191c-.586-.23-.576-.472.129-.698l10.1-3.887c.484-.186.916.113.726.913l-1.718 6.375-5.49-2.435z"></path>
+        </svg>
+        Telegram: @programmerpython777
+      </a>
+      <div class="contact-phone">
+        📞 +374 55 766 837
+      </div>
+    </div>
+  </header>
+
+  <!-- Блок с рейтингом -->
+  <div class="rating-container" aria-label="Оцените сайт">
+    <div>Если вам нравится мой проект — оцените, пожалуйста</div>
+    <div class="rating-buttons-row">
+      <button class="rating-button" id="likeBtn" aria-label="Нравится">
+        👍 <span id="likeCount" class="rating-count">0</span>
+      </button>
+      <button class="rating-button" id="dislikeBtn" aria-label="Не нравится">
+        👎 <span id="dislikeCount" class="rating-count">0</span>
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Mirzoyan Mher. Все права защищены.
+  </footer>
+
+  <script>
+    const likeBtn = document.getElementById('likeBtn');
+    const dislikeBtn = document.getElementById('dislikeBtn');
+    const likeCountElem = document.getElementById('likeCount');
+    const dislikeCountElem = document.getElementById('dislikeCount');
+
+    let likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+    let dislikeCount = parseInt(localStorage.getItem('dislikeCount')) || 0;
+    let hasVoted = localStorage.getItem('hasVoted'); // "like", "dislike" или null
+
+    likeCountElem.textContent = likeCount;
+    dislikeCountElem.textContent = dislikeCount;
+
+    if (hasVoted) {
+      likeBtn.disabled = true;
+      dislikeBtn.disabled = true;
+    }
+
+    likeBtn.addEventListener('click', () => {
+      if (hasVoted) return;
+      likeCount++;
+      likeCountElem.textContent = likeCount;
+      localStorage.setItem('likeCount', likeCount);
+      localStorage.setItem('hasVoted', 'like');
+      likeBtn.disabled = true;
+      dislikeBtn.disabled = true;
+    });
+
+    dislikeBtn.addEventListener('click', () => {
+      if (hasVoted) return;
+      dislikeCount++;
+      dislikeCountElem.textContent = dislikeCount;
+      localStorage.setItem('dislikeCount', dislikeCount);
+      localStorage.setItem('hasVoted', 'dislike');
+      likeBtn.disabled = true;
+      dislikeBtn.disabled = true;
+    });
+  </script>
+</body>
+</html>
